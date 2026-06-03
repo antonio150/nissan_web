@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
+import { FiMapPin, FiSearch } from "react-icons/fi";
+import Recherche from "./recherche/page";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -10,12 +12,14 @@ export default function Navbar() {
   const [showShopMenu, setShowShopMenu] = useState(false);
   const [showElectrifiedMenu, setShowElectrifiedMenu] = useState(false);
   const [showOwnersMenu, setShowOwnersMenu] = useState(false);
+  const [showDealersMenu, setShowDealersMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const shopMenuRef = useRef<HTMLDivElement | null>(null);
   const electrifiedMenuRef = useRef<HTMLDivElement | null>(null);
   const ownersMenuRef = useRef<HTMLDivElement | null>(null);
+  const dealersMenuRef = useRef<HTMLDivElement | null>(null);
 
   const featured_vehicles = [
     {
@@ -269,39 +273,39 @@ export default function Navbar() {
       titre: "MyNISSAN Owner Portal",
       description:
         "Enhance your ownership experience with MyNISSAN - your online home for information on your Nissan model.",
-      link:[
+      link: [
         {
           label: "Login/Register",
-          url: "https://www.nissanusa.com/mynissan.html",
+          url: "https://www.nissanusa.com/mynissan.html"
         },
         {
           label: "Experience MyNISSAN",
-          url: "https://www.nissanusa.com/owners/owner-experience.html",
+          url: "https://www.nissanusa.com/owners/owner-experience.html"
         },
         {
           label: "Owners Resources",
-          url: "https://www.nissanusa.com/owners.html",
+          url: "https://www.nissanusa.com/owners.html"
         },
         {
           label: "NissanConnect Services",
-          url: "https://www.nissanusa.com/owners.html",
-        },
-    ]
+          url: "https://www.nissanusa.com/owners.html"
+        }
+      ]
     },
     {
       img: "/img/menu/owners/nissan-service-staff-helping-client.webp",
       titre: null,
       description: null,
-      link:[
+      link: [
         {
           label: "Recalls & Service Info",
-          url: "https://www.nissanusa.com/owners/recalls-vin.html",
+          url: "https://www.nissanusa.com/owners/recalls-vin.html"
         },
         {
           label: "Scedules Service",
-          url: "https://www.nissanusa.com/parts-service",
-        },
-    ]
+          url: "https://www.nissanusa.com/parts-service"
+        }
+      ]
     }
   ];
 
@@ -389,6 +393,27 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showOwnersMenu]);
 
+  useEffect(() => {
+    if (!showDealersMenu) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      if (
+        dealersMenuRef.current &&
+        navRef.current &&
+        !dealersMenuRef.current.contains(target) &&
+        !navRef.current.contains(target)
+      ) {
+        setShowDealersMenu(false);
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showDealersMenu]);
+
   const renderSectionItem = (
     vehicle: {
       image: string;
@@ -441,13 +466,14 @@ export default function Navbar() {
           <ul className="hidden md:flex md:items-center gap-8 text-[12px]">
             <li>
               <Link
-                href="/"
+                href="#"
                 onClick={(event) => {
                   event.preventDefault();
                   setShowVehiclesMenu((current) => !current);
                   setShowShopMenu(false);
                   setShowElectrifiedMenu(false);
                   setShowOwnersMenu(false);
+                  setShowDealersMenu(false);
                   setShowMenu(true);
                 }}
                 className={`transition ${showVehiclesMenu ? "font-bold" : "font-normal"} ${showMenu ? "text-black font-bold" : "text-white"}`}
@@ -458,12 +484,13 @@ export default function Navbar() {
 
             <li>
               <Link
-                href="/about"
+                href="#"
                 onClick={(event) => {
                   event.preventDefault();
                   setShowShopMenu((current) => !current);
                   setShowVehiclesMenu(false);
                   setShowElectrifiedMenu(false);
+                  setShowDealersMenu(false);
                   setShowOwnersMenu(false);
                   setShowMenu(true);
                 }}
@@ -475,12 +502,13 @@ export default function Navbar() {
 
             <li>
               <Link
-                href="/services"
+                href="#"
                 onClick={(event) => {
                   event.preventDefault();
                   setShowElectrifiedMenu((current) => !current);
                   setShowVehiclesMenu(false);
                   setShowShopMenu(false);
+                  setShowDealersMenu(false);
                   setShowOwnersMenu(false);
                   setShowMenu(true);
                 }}
@@ -492,12 +520,13 @@ export default function Navbar() {
 
             <li>
               <Link
-                href="/contact"
+                href="#"
                 onClick={(event) => {
                   event.preventDefault();
                   setShowOwnersMenu((current) => !current);
                   setShowVehiclesMenu(false);
                   setShowShopMenu(false);
+                  setShowDealersMenu(false);
                   setShowElectrifiedMenu(false);
                   setShowMenu(true);
                 }}
@@ -509,8 +538,17 @@ export default function Navbar() {
 
             <li>
               <Link
-                href="/contact"
-                className={`transition ${showMenu ? "text-black" : "text-white"}`}
+                href="#"
+                onClick={(event) => {
+                  event.preventDefault();
+                  setShowDealersMenu((current) => !current);
+                  setShowVehiclesMenu(false);
+                  setShowShopMenu(false);
+                  setShowOwnersMenu(false);
+                  setShowElectrifiedMenu(false);
+                  setShowMenu(true);
+                }}
+                className={`transition ${showDealersMenu ? "font-bold" : "font-normal"} ${showMenu ? "text-black" : "text-white"}`}
               >
                 Dealers
               </Link>
@@ -519,7 +557,10 @@ export default function Navbar() {
             <li
               className={`border rounded-full px-6 py-3 transition ${showMenu ? "bg-red-900 text-white" : "bg-transparent text-white hover:bg-transparent"}`}
             >
-              <Link href="/contact" className="transition">
+              <Link
+                href="https://www.nissanusa.com/shopping-tools/build-price"
+                className="transition"
+              >
                 Build & Price
               </Link>
             </li>
@@ -566,160 +607,226 @@ export default function Navbar() {
         </div>
       </nav>
       {showVehiclesMenu && (
-      <div
-        ref={menuRef}
-        id="menu-vehicles"
-        className={`bg-white text-black py-5 absolute right-0 h-full w-[600px] flex gap-3 z-20 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
-          showVehiclesMenu
-            ? "translate-x-0 pointer-events-auto"
-            : "translate-x-full pointer-events-none"
-        }`}
-        onClick={() => setShowShopMenu(false)}
-      >
-        <div className="w-1/3 overflow-auto border-r mt-7 border-slate-200 bg-slate-50 p-4">
-          <ul className="space-y-2">
-            {sections.map((section) => (
-              <li key={section.label}>
-                <button
-                  type="button"
-                  onClick={() => setActiveSection(section.label)}
-                  className={`w-full text-left rounded-xl px-3 py-3 text-sm font-medium transition ${
-                    section.label === activeSection
-                      ? "bg-white text-black shadow"
-                      : "text-slate-600 hover:bg-slate-100"
-                  }`}
-                >
-                  {section.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="w-2/3 p-4 mt-7 overflow-auto">
-          {activeSectionData.items.length > 0 ? (
-            <ul className="space-y-3">
-              {activeSectionData.items.map(renderSectionItem)}
-            </ul>
-          ) : (
-            <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500">
-              Cliquez sur un menu à gauche pour afficher son contenu.
-            </div>
-          )}
-        </div>
-      </div>
-        )}
-        {showShopMenu && (
-      <div
-        ref={shopMenuRef}
-        id="menu-shop"
-        className={`bg-white text-black py-5 absolute right-0 h-full w-[600px] flex gap-3 z-20 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
-          showShopMenu
-            ? "translate-x-0 pointer-events-auto"
-            : "translate-x-full pointer-events-none"
-        }`}
-      >
-        <div className="w-full p-4 mt-7 overflow-auto">
-          {shop.map((shop_section, item) => (
-            <div key={item} className="my-6">
-              <h1 className="my-6">{shop_section.titre}</h1>
-              <div className="flex item-center ">
-                <div className="w-1/3 mr-4">
-                  <img
-                    src={shop_section.img}
-                    alt={shop_section.titre}
-                    className="w-100 h-30 object-cover "
-                  />
-                </div>
-                <div className="w-2/3">
-                  <p className="mx-4">{shop_section.description ?? ""}</p>
-                  {shop_section.link.map((shop_section_link, item) => (
-                    <a
-                      key={item}
-                      href={shop_section_link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-4 text-[12px] py-2 px-4 text-black-500 hover:text-black-700"
+        <div
+          ref={menuRef}
+          id="menu-vehicles"
+          className={`bg-white text-black py-5 absolute right-0 h-full w-[600px]  gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
+            showVehiclesMenu
+              ? "translate-x-0 pointer-events-auto"
+              : "translate-x-full pointer-events-none"
+          }`}
+          onClick={() => setShowShopMenu(false)}
+        >
+          <div className="flex gap-3">
+            <div className="w-1/3 overflow-auto border-r mt-7 border-slate-200 bg-slate-50 p-4">
+              <ul className="space-y-2">
+                {sections.map((section) => (
+                  <li key={section.label}>
+                    <button
+                      type="button"
+                      onClick={() => setActiveSection(section.label)}
+                      className={`w-full text-left rounded-xl px-3 py-3 text-sm font-medium transition ${
+                        section.label === activeSection
+                          ? "bg-white text-black shadow"
+                          : "text-slate-600 hover:bg-slate-100"
+                      }`}
                     >
-                      <span>{shop_section_link.label}</span>
+                      {section.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="w-2/3 p-4 mt-7 overflow-auto">
+              {activeSectionData.items.length > 0 ? (
+                <ul className="space-y-3">
+                  {activeSectionData.items.map(renderSectionItem)}
+                </ul>
+              ) : (
+                <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center text-sm text-slate-500">
+                  Cliquez sur un menu à gauche pour afficher son contenu.
+                </div>
+              )}
+            </div>
+          </div>
+          <Recherche />
+        </div>
+      )}
+      {showShopMenu && (
+        <div
+          ref={shopMenuRef}
+          id="menu-shop"
+          className={`bg-white text-black py-5 absolute right-0 h-full w-[600px]  gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
+            showShopMenu
+              ? "translate-x-0 pointer-events-auto"
+              : "translate-x-full pointer-events-none"
+          }`}
+        >
+          <div className="w-full p-4 mt-7 overflow-auto">
+            {shop.map((shop_section, item) => (
+              <div key={item} className="my-6">
+                <h1 className="my-6">{shop_section.titre}</h1>
+                <div className="flex item-center ">
+                  <div className="w-1/3 mr-4">
+                    <img
+                      src={shop_section.img}
+                      alt={shop_section.titre}
+                      className="w-100 h-30 object-cover "
+                    />
+                  </div>
+                  <div className="w-2/3">
+                    <p className="mx-4">{shop_section.description ?? ""}</p>
+                    {shop_section.link.map((shop_section_link, item) => (
+                      <a
+                        key={item}
+                        href={shop_section_link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-4 text-[12px] py-2 px-4 text-black-500 hover:text-black-700"
+                      >
+                        <span>{shop_section_link.label}</span>
+                        <span className="text-red-700 font-bold">&gt;</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+                <hr className="border-gray-400" />
+              </div>
+            ))}
+          </div>
+          <Recherche />
+        </div>
+      )}
+      {showElectrifiedMenu && (
+        <div
+          ref={electrifiedMenuRef}
+          id="menu-electrified"
+          className={`bg-white text-black py-5 absolute right-0 h-full w-[600px] gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
+            showElectrifiedMenu
+              ? "translate-x-0 pointer-events-auto"
+              : "translate-x-full pointer-events-none"
+          }`}
+        >
+          <div className="w-full p-4 mt-7 overflow-auto">
+            {electrified.map((electrified_item, index) => (
+              <div className="w-full  p-4 mt-7 overflow-auto" key={index}>
+                <h1>{electrified_item.nom}</h1>
+                <div className="flex items-center gap-4">
+                  <div className="w-1/3 mr-4">
+                    <img
+                      src={electrified_item.img}
+                      alt={electrified_item.nom}
+                    />
+                  </div>
+                  <div className="w-2/3 flex flex-col ">
+                    <p className="text-[12px] ">
+                      {electrified_item.description}
+                    </p>
+                    <a
+                      href={electrified_item.url}
+                      className="flex items-start gap-4 text-[12px] py-2 text-black-500 hover:text-black-700"
+                    >
+                      <span className="font-bold">
+                        {electrified_item.label}
+                      </span>
                       <span className="text-red-700 font-bold">&gt;</span>
                     </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <Recherche />
+        </div>
+      )}
+      {showOwnersMenu && (
+        <div
+          ref={ownersMenuRef}
+          id="menu-owners"
+          className={`bg-white text-black py-5 absolute right-0 h-full w-[600px]  gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
+            showOwnersMenu
+              ? "translate-x-0 pointer-events-auto"
+              : "translate-x-full pointer-events-none"
+          }`}
+        >
+          <div className="w-full p-4 mt-7 overflow-auto">
+            {owners.map((owner_item, index) => (
+              <div key={index} className="w-full flex  p-4 mt-7 overflow-auto">
+                <div className="w-1/3 mr-4">
+                  <img src={owner_item.img} alt={owner_item.titre ?? "img"} />
+                </div>
+                <div className="w-2/3">
+                  <h1>{owner_item.titre}</h1>
+                  <p className="text-[12px]">{owner_item.description}</p>
+                  {owner_item.link.map((owner_item_link, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start gap-4 text-[12px] py-2 text-black-500 hover:text-black-700"
+                    >
+                      <a
+                        href={owner_item_link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {owner_item_link.label}
+                      </a>
+                      <span className="text-red-700 font-bold">&gt;</span>
+                    </div>
                   ))}
                 </div>
               </div>
-              <hr className="border-gray-400" />
-            </div>
-          ))}
-        </div>
-      </div>
-        )}
-        {showElectrifiedMenu && (
-      <div
-        ref={electrifiedMenuRef}
-        id="menu-electrified"
-        className={`bg-white text-black py-5 absolute right-0 h-full w-[600px] flex gap-3 z-20 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
-          showElectrifiedMenu
-            ? "translate-x-0 pointer-events-auto"
-            : "translate-x-full pointer-events-none"
-        }`}
-      >
-        <div className="w-full p-4 mt-7 overflow-auto">
-          {electrified.map((electrified_item, index) => (
-            <div className="w-full  p-4 mt-7 overflow-auto" key={index}>
-              <h1>{electrified_item.nom}</h1>
-              <div className="flex items-center gap-4">
-                <div className="w-1/3 mr-4">
-                  <img src={electrified_item.img} alt={electrified_item.nom} />
-                </div>
-                <div className="w-2/3 flex flex-col ">
-                  <p className="text-[12px] ">{electrified_item.description}</p>
-                  <a
-                    href={electrified_item.url}
-                    className="flex items-start gap-4 text-[12px] py-2 text-black-500 hover:text-black-700"
-                  >
-                    <span className="font-bold">{electrified_item.label}</span>
-                    <span className="text-red-700 font-bold">&gt;</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-        )}
-        {showOwnersMenu && (
-      <div
-        ref={ownersMenuRef}
-        id="menu-owners"
-        className={`bg-white text-black py-5 absolute right-0 h-full w-[600px] flex gap-3 z-20 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
-          showOwnersMenu
-            ? "translate-x-0 pointer-events-auto"
-            : "translate-x-full pointer-events-none"
-        }`}
-      >
-        <div>
-          {owners.map((owner_item, index) => (
-          <div key={index} className="w-full flex  p-4 mt-7 overflow-auto">
-          <div className="w-1/3 mr-4">
-            <img src={owner_item.img} alt={owner_item.titre ?? "img"} />
-          </div>
-          <div className="w-2/3">
-            <h1>{owner_item.titre}</h1>
-            <p className="text-[12px]">{owner_item.description}</p>
-            {owner_item.link.map((owner_item_link, index) => (
-              <div key={index} className="flex items-start gap-4 text-[12px] py-2 text-black-500 hover:text-black-700">
-                <a href={owner_item_link.url} target="_blank" rel="noopener noreferrer">
-                  {owner_item_link.label}
-                </a>
-                <span className="text-red-700 font-bold">&gt;</span>
-            </div>
             ))}
           </div>
+          <Recherche />
         </div>
-          ))}
+      )}
+      {showDealersMenu && (
+        <div
+          ref={dealersMenuRef}
+          id="menu-dealers"
+          className={`bg-white text-black py-5 absolute right-0 h-full w-[600px] gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
+            showDealersMenu
+              ? "translate-x-0 pointer-events-auto"
+              : "translate-x-full pointer-events-none"
+          }`}
+        >
+          <div className="w-full p-4 mt-7 overflow-auto gap-4">
+            <div className="mt-7">
+              <img
+                src="/img/menu/dealers/infiniti-dealer-inventory-map.jpg"
+                alt="finiti-dealer-inventory-map"
+              />
+            </div>
+            <div className="flex gap-4 items-center justify-between py-7">
+              <div className="relative">
+                <input
+                  type="text"
+                  className="bg-gray-200 rounded-3xl px-5 py-2 pr-12"
+                  placeholder="Enter ZIP Code"
+                />
+
+                <FiSearch
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                  size={18}
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <FiMapPin size={18} />
+                <p className="text-[12px]">Locate Me</p>
+              </div>
+            </div>
+            <div className="text-[14px] space-y-2 ">
+              <p>Please enter your location</p>
+              <p>
+                To find the best offers and nearby inventory, we need to find
+                the location
+              </p>
+            </div>
+          </div>
+          <Recherche />
         </div>
-      </div>
-        )}
+      )}
     </>
   );
 }
