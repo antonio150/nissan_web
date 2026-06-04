@@ -456,12 +456,15 @@ export default function Navbar() {
     <>
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 w-full bg-transparent  text-white z-50"
+        className="fixed top-0 left-0 w-full bg-white md:bg-transparent  text-white z-50"
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           {/* Logo */}
-          <h1 className="text-2xl font-bold tracking-wide">Nissan</h1>
-
+         
+          <img className="h-13 hidden md:block" src="/img/menu/nissan-logo-white.svg" alt="nissan-logo-white" />
+          <span className="block md:hidden text-black font-bold">
+            Nissan
+          </span>
           {/* Desktop Menu */}
           <ul className="hidden md:flex md:items-center gap-8 text-[12px]">
             <li>
@@ -567,44 +570,87 @@ export default function Navbar() {
           </ul>
 
           {/* Mobile Button */}
-          <button className="md:hidden" onClick={() => setOpen(!open)}>
+          <button className="md:hidden relative z-30 text-black" onClick={() => setOpen(!open)}>
             {open ? <X size={30} /> : <Menu size={30} />}
           </button>
-        </div>
+       
 
         {/* Mobile Menu */}
-        <div
-          className={`
-          md:hidden overflow-hidden transition-all duration-500
-          ${open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}
-        `}
-        >
-          <ul className="flex flex-col gap-6 px-6 pb-6 text-lg bg-black/90">
+         </div>
+        {open && (
+          <div
+            className="z-20 md:hidden overflow-auto bg-white transition-all duration-500 absolute top-10 left-0 w-full h-screen"
+          >
+            <ul className="flex flex-col mt-10 gap-6 px-6  text-[12px] text-black ">
+              <li>
+                <Link
+                  href="/"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center justify-between"
+                >
+                  <span>Vehicles</span>
+                  <span aria-hidden="true">&gt;</span>
+                </Link>
+              </li>
+            <hr className="border-gray-300" />
             <li>
-              <Link href="/" onClick={() => setOpen(false)}>
-                Accueil
+              <Link
+                href="/about"
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-between"
+              >
+                <span>Shop</span>
+                <span aria-hidden="true">&gt;</span>
               </Link>
             </li>
-
+            <hr className="border-gray-300" />
             <li>
-              <Link href="/about" onClick={() => setOpen(false)}>
-                À propos
+              <Link
+                href="/services"
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-between"
+              >
+                <span>Electrified</span>
+                <span aria-hidden="true">&gt;</span>
               </Link>
             </li>
-
+            <hr className="border-gray-300"/>
             <li>
-              <Link href="/services" onClick={() => setOpen(false)}>
-                Services
+              <Link
+                href="/contact"
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-between"
+              >
+                <span>Owners</span>
+                <span aria-hidden="true">&gt;</span>
               </Link>
             </li>
-
+            <hr className="border-gray-300"/>
             <li>
-              <Link href="/contact" onClick={() => setOpen(false)}>
-                Contact
+              <Link
+                href="/contact"
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-between"
+              >
+                <span>Dealers</span>
+                <span aria-hidden="true">&gt;</span>
+              </Link>
+            </li>
+            <hr className="border-gray-300"/>
+            <li 
+            className={`border rounded-full w-50 px-6 py-3 transition bg-red-900 text-white`}
+            >
+              <Link
+                href="https://www.nissanusa.com/shopping-tools/build-price"
+                className="flex items-center justify-between transition"
+              >
+                <span>Build & Price</span>
+                <span aria-hidden="true">&gt;</span>
               </Link>
             </li>
           </ul>
         </div>
+        )}
       </nav>
       {showVehiclesMenu && (
         <div
@@ -617,7 +663,7 @@ export default function Navbar() {
           }`}
           onClick={() => setShowShopMenu(false)}
         >
-          <div className="flex gap-3">
+          <div className="flex gap-3 h-full">
             <div className="w-1/3 overflow-auto border-r mt-7 border-slate-200 bg-slate-50 p-4">
               <ul className="space-y-2">
                 {sections.map((section) => (
@@ -663,7 +709,7 @@ export default function Navbar() {
               : "translate-x-full pointer-events-none"
           }`}
         >
-          <div className="w-full p-4 mt-7 overflow-auto">
+          <div className="w-full p-4 mt-7 h-full overflow-auto">
             {shop.map((shop_section, item) => (
               <div key={item} className="my-6">
                 <h1 className="my-6">{shop_section.titre}</h1>
@@ -708,7 +754,7 @@ export default function Navbar() {
               : "translate-x-full pointer-events-none"
           }`}
         >
-          <div className="w-full p-4 mt-7 overflow-auto">
+          <div className="w-full p-4 mt-7 h-full overflow-auto">
             {electrified.map((electrified_item, index) => (
               <div className="w-full  p-4 mt-7 overflow-auto" key={index}>
                 <h1>{electrified_item.nom}</h1>
@@ -750,7 +796,7 @@ export default function Navbar() {
               : "translate-x-full pointer-events-none"
           }`}
         >
-          <div className="w-full p-4 mt-7 overflow-auto">
+          <div className="w-full p-4 mt-7 h-full overflow-auto">
             {owners.map((owner_item, index) => (
               <div key={index} className="w-full flex  p-4 mt-7 overflow-auto">
                 <div className="w-1/3 mr-4">
@@ -791,14 +837,14 @@ export default function Navbar() {
               : "translate-x-full pointer-events-none"
           }`}
         >
-          <div className="w-full p-4 mt-7 overflow-auto gap-4">
+          <div className="w-full p-4 pb-19 mt-7 overflow-auto h-full gap-4">
             <div className="mt-7">
               <img
                 src="/img/menu/dealers/infiniti-dealer-inventory-map.jpg"
                 alt="finiti-dealer-inventory-map"
               />
             </div>
-            <div className="flex gap-4 items-center justify-between py-7">
+            <div className="flex gap-4 items-center  justify-between py-9">
               <div className="relative">
                 <input
                   type="text"
