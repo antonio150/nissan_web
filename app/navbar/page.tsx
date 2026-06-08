@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { FiMapPin, FiSearch } from "react-icons/fi";
 import Recherche from "./recherche/page";
+import { FaArrowRight, FaChevronRight } from "react-icons/fa";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -456,17 +457,16 @@ export default function Navbar() {
     <>
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 w-full bg-white md:bg-transparent  text-white z-50"
+        className="absolute top-0 left-0 w-full bg-white md:bg-transparent  text-white z-50"
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           {/* Logo */}
          
-          <img className="h-13 hidden md:block" src="/img/menu/nissan-logo-white.svg" alt="nissan-logo-white" />
-          <span className="block md:hidden text-black font-bold">
-            Nissan
-          </span>
+          <img className="h-18 hidden md:block" src="/img/menu/nissan-logo-white.svg" alt="nissan-logo-white" />
+          <img className="h-4 block md:hidden" src="/img/menu/nissan-logo-black-m.svg" alt="nissan-logo-white" />
+         
           {/* Desktop Menu */}
-          <ul className="hidden md:flex md:items-center gap-8 text-[12px]">
+          <ul className="hidden md:flex md:items-center gap-8 text-md">
             <li>
               <Link
                 href="#"
@@ -581,7 +581,7 @@ export default function Navbar() {
           <div
             className="z-20 md:hidden overflow-auto bg-white transition-all duration-500 absolute top-10 left-0 w-full h-screen"
           >
-            <ul className="flex flex-col mt-10 gap-6 px-6  text-[12px] text-black ">
+            <ul className="flex flex-col mt-10 gap-6 px-6 pb-10  text-[12px] text-black ">
               <li>
                 <Link
                   href="/"
@@ -589,7 +589,10 @@ export default function Navbar() {
                   className="flex items-center justify-between"
                 >
                   <span>Vehicles</span>
-                  <span aria-hidden="true">&gt;</span>
+                  <FaChevronRight
+                    className="text-md text-red-700"
+                    aria-hidden="true"
+                  />
                 </Link>
               </li>
             <hr className="border-gray-300" />
@@ -600,7 +603,10 @@ export default function Navbar() {
                 className="flex items-center justify-between"
               >
                 <span>Shop</span>
-                <span aria-hidden="true">&gt;</span>
+                <FaChevronRight
+                    className="text-md text-red-700"
+                    aria-hidden="true"
+                  />
               </Link>
             </li>
             <hr className="border-gray-300" />
@@ -611,7 +617,10 @@ export default function Navbar() {
                 className="flex items-center justify-between"
               >
                 <span>Electrified</span>
-                <span aria-hidden="true">&gt;</span>
+                <FaChevronRight
+                    className="text-md text-red-700"
+                    aria-hidden="true"
+                  />
               </Link>
             </li>
             <hr className="border-gray-300"/>
@@ -622,7 +631,10 @@ export default function Navbar() {
                 className="flex items-center justify-between"
               >
                 <span>Owners</span>
-                <span aria-hidden="true">&gt;</span>
+                <FaChevronRight
+                    className="text-md text-red-700"
+                    aria-hidden="true"
+                  />
               </Link>
             </li>
             <hr className="border-gray-300"/>
@@ -633,7 +645,10 @@ export default function Navbar() {
                 className="flex items-center justify-between"
               >
                 <span>Dealers</span>
-                <span aria-hidden="true">&gt;</span>
+                <FaChevronRight
+                    className="text-md text-red-700"
+                    aria-hidden="true"
+                  />
               </Link>
             </li>
             <hr className="border-gray-300"/>
@@ -645,10 +660,12 @@ export default function Navbar() {
                 className="flex items-center justify-between transition"
               >
                 <span>Build & Price</span>
-                <span aria-hidden="true">&gt;</span>
-              </Link>
+                <FaArrowRight className="text-md text-white" />
+                </Link>
             </li>
+            
           </ul>
+          <Recherche/>
         </div>
         )}
       </nav>
@@ -656,7 +673,7 @@ export default function Navbar() {
         <div
           ref={menuRef}
           id="menu-vehicles"
-          className={`bg-white text-black py-5 absolute right-0 h-full w-[600px]  gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
+          className={`bg-white text-black py-5 absolute right-0 h-full w-[700px]  gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
             showVehiclesMenu
               ? "translate-x-0 pointer-events-auto"
               : "translate-x-full pointer-events-none"
@@ -703,7 +720,7 @@ export default function Navbar() {
         <div
           ref={shopMenuRef}
           id="menu-shop"
-          className={`bg-white text-black py-5 absolute right-0 h-full w-[600px]  gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
+          className={`bg-white text-black py-5 absolute right-0 h-full w-[700px]  gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
             showShopMenu
               ? "translate-x-0 pointer-events-auto"
               : "translate-x-full pointer-events-none"
@@ -748,7 +765,7 @@ export default function Navbar() {
         <div
           ref={electrifiedMenuRef}
           id="menu-electrified"
-          className={`bg-white text-black py-5 absolute right-0 h-full w-[600px] gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
+          className={`bg-white text-black py-5 absolute right-0 h-full w-[700px] gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
             showElectrifiedMenu
               ? "translate-x-0 pointer-events-auto"
               : "translate-x-full pointer-events-none"
@@ -790,7 +807,7 @@ export default function Navbar() {
         <div
           ref={ownersMenuRef}
           id="menu-owners"
-          className={`bg-white text-black py-5 absolute right-0 h-full w-[600px]  gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
+          className={`bg-white text-black py-5 absolute right-0 h-full w-[700px]  gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
             showOwnersMenu
               ? "translate-x-0 pointer-events-auto"
               : "translate-x-full pointer-events-none"
@@ -831,7 +848,7 @@ export default function Navbar() {
         <div
           ref={dealersMenuRef}
           id="menu-dealers"
-          className={`bg-white text-black py-5 absolute right-0 h-full w-[600px] gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
+          className={`bg-white text-black py-5 absolute right-0 h-full w-[700px] gap-3 z-21 shadow-2xl overflow-hidden border border-slate-200 transition-transform duration-500 ease-out ${
             showDealersMenu
               ? "translate-x-0 pointer-events-auto"
               : "translate-x-full pointer-events-none"

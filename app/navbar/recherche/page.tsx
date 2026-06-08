@@ -8,8 +8,8 @@ export default function Recherche(){
             <div className="relative">
                 <input
                 type="text"
-                placeholder="Rechercher..."
-                className="bg-white px-10 py-2 w-full rounded-3xl"
+                placeholder="Search Nissan USA"
+                className="bg-white px-10 text-[14px] text-gray-900 placeholder-gray-500 py-2 w-full rounded-3xl"
                 />
 
                 <FiSearch

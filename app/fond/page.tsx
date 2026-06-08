@@ -2,22 +2,29 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { FaArrowRight } from "react-icons/fa";
 
 const slides = [
   {
     image: "/img/fond/slide_fond1.avif",
     title: "Go the distance",
-    description: "Puissance et élégance sur tous les terrains.",
+    description: "Explore the NISSAN lineup to see which vehicles can help you save at the pump. [*]",
+    btn_label:"Build your Nissan",
+    btn_link: "https://www.nissanusa.com/shopping-tools/build-price",
   },
   {
     image: "/img/fond/slide_fond2.webp",
     title: "2026 Rogue, 2026 Frontiere, 2026 Pathfinder, 2026 Murano",
-    description: "L'aventure commence ici.",
+    description: "FOR WELL-QUALIFIED BUYERS WHO FINANCE THROUGH NMAC",
+    btn_label:"View Offers",
+    btn_link: "https://www.nissanusa.com/shopping-tools/deals-incentives-offers.html",
   },
   {
     image: "/img/fond/slide_fond3.webp",
-    title: "Nissan Navara",
-    description: "Conçu pour le travail et les loisirs.",
+    title: "Nissan is the fastest-growing mainstream brand [*]",
+    description: "Discover why more drivers chose Nissan and explore offers today.",
+    btn_label:"Explore Offers",
+    btn_link: "https://www.nissanusa.com/shopping-tools/deals-incentives-offers.html",
   },
 ];
 
@@ -48,7 +55,7 @@ export default function HeroSlider() {
         <div
           key={index}
           className={`absolute inset-0 transition-opacity duration-1000 ${
-            current === index ? "opacity-100" : "opacity-0"
+            current === index ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
           }`}
         >
           <Image
@@ -63,14 +70,18 @@ export default function HeroSlider() {
           <div className="absolute inset-0 bg-black/40" />
 
           {/* Texte */}
-          <div className="absolute inset-0 flex flex-col justify-center items-start text-center text-white px-10">
-            <h1 className="text-xl font-bold mb-4">
+          <div className="absolute inset-0 flex flex-col font-thin justify-center items-start text-center text-white px-10">
+            <h1 className="text-4xl text-left mb-10 w-150">
               {slide.title}
             </h1>
 
-            <p className="text-xl max-w-2xl">
+            <p className="text-md mb-5 max-w-2xl">
               {slide.description}
             </p>
+            <a href={slide.btn_link} className="flex space-x-2 items-center text-[14px]  hover:bg-black hover:text-white rounded-3xl bg-white text-black px-6 py-2 justify-between transition">
+              <span>{slide.btn_label}</span>
+              <FaArrowRight className="text-md " />
+            </a>
           </div>
         </div>
       ))}
