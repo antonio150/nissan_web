@@ -267,11 +267,11 @@ export default function Cars() {
   }
 
   return (
-    <section className="mx-auto max-w-[1200px] ">
+    <section className="mx-auto  ">
       <div className="relative">
         <div id="cars" className="relative overflow-hidden  bg-slate-900 shadow-2xl h-[300px] sm:h-[520px]">
           <div className="absolute inset-0">
-            <div className="relative w-full h-full h-[720px] min-h-[300px] sm:min-h-[520px]">
+            <div className="relative w-full h-full min-h-[300px] sm:min-h-[520px]">
               <img
                 id="img_fond"
                 src={activeItem.img}
@@ -282,7 +282,7 @@ export default function Cars() {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent" />
           </div>
 
-          <div className="flex absolute inset-0">
+          <div className="flex items-center absolute top-60 w-full p-2 z-24">
             <div className="  flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <span className="text-sm text-white">
                 {activeIndex + 1} / {activeCategory.value.length}
@@ -327,15 +327,15 @@ export default function Cars() {
 
         <div
           id="section-list-cars"
-          className="relative mt-8 sm:absolute sm:bottom-0 sm:left-1 sm:mt-0"
+          className="relative mt-8  sm:absolute sm:top-90 sm:left-1 sm:mt-0"
         >
-          <div className=" flex items-center ">
+          <div className=" overflow-x-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-black-200 w-full flex items-center ">
             {categories.map((category) => (
               <button
                 key={category.type}
                 type="button"
                 onClick={() => setActiveType(category.type)}
-                className={`rounded-full text-white  px-4 py-2 text-sm transition ${
+                className={`rounded-full text-white shrink-0 px-4 py-2 text-sm transition ${
                   activeType === category.type ? "font-bold" : "font-normal "
                 }`}
               >
@@ -344,7 +344,7 @@ export default function Cars() {
             ))}
           </div>
 
-          <div className="flex flex-nowrap overflow-x-auto w-screen mt-4 px-3 ">
+          <div className="flex flex-nowrap overflow-x-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-black-200 w-full mt-4 px-3 ">
             {activeCategory.value.map((item, index) => {
               const isActive = item.img === activeItem.img;
               return (
