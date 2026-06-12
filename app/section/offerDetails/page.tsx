@@ -20,7 +20,7 @@ export default function OfferDetails({ nom }: { nom: string }) {
           id="offer-details-button"
           type="button"
           onClick={() => setIsOpen(true)}
-          className="group flex items-center gap-2 text-white-500"
+          className="group shrink-0 flex items-center gap-2 text-white-500"
         >
           <span>Offer Details</span>
           <span className="w-9 text-white text-2xl group-hover:text-red-500 group-hover:translate-x-[7px] transition-transform">
