@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa";
+import OfferDetails from "../offerDetails/page";
 
 type CarItem = {
   titre: string;
@@ -376,6 +377,7 @@ export default function Cars() {
           </div>
         </div>
       </div>
+      <OfferDetails nom="tatatat" />
     </section>
   );
 }
