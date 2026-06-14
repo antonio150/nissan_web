@@ -236,6 +236,7 @@ function formatTypeLabel(type: string) {
 export default function Cars() {
   const [activeType, setActiveType] = useState(categories[0].type);
   const [activeIndex, setActiveIndex] = useState(0);
+ 
 
   const activeCategory = useMemo(
     () =>
@@ -266,6 +267,10 @@ export default function Cars() {
   function selectSlide(index: number) {
     setActiveIndex(index);
   }
+
+  const imgActive = activeCategory.value.find(
+                  item => item.img === activeItem.img
+                )?.nom ?? null;
 
   return (
     <section className="mx-auto  ">
@@ -348,6 +353,7 @@ export default function Cars() {
           <div className="flex flex-nowrap overflow-x-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-black-200 w-full mt-4 px-3 ">
             {activeCategory.value.map((item, index) => {
               const isActive = item.img === activeItem.img;
+              
               return (
                 <button
                   key={item.img}
@@ -377,7 +383,7 @@ export default function Cars() {
           </div>
         </div>
       </div>
-      <OfferDetails nom="tatatat" />
+      <OfferDetails nom={imgActive} />
     </section>
   );
 }
