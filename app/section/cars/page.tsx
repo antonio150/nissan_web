@@ -333,7 +333,7 @@ export default function Cars() {
 
         <div
           id="section-list-cars"
-          className="relative mt-8  sm:absolute sm:top-90 sm:left-1 sm:mt-0"
+          className="relative mt-8  md:absolute md:top-90 md:left-1 md:mt-0"
         >
           <div className=" overflow-x-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-black-200 w-full flex items-center ">
             {categories.map((category) => (

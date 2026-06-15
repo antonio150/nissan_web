@@ -4,6 +4,8 @@ import HeroSlider from "./fond/page";
 import Choix from "./section/choix/page";
 import Cars from "./section/cars/page";
 import PageVideo from "./section/video/page";
+import PageDiscover from "./section/discover/page";
+import PageConclusion from "./section/conclusion/page";
 
 export default function Home() {
   return (
@@ -13,6 +15,8 @@ export default function Home() {
       <Choix />
       <Cars />
       <PageVideo />
+      <PageDiscover/>
+      <PageConclusion/>
     </div>
   );
 }
