@@ -6,6 +6,7 @@ import Cars from "./section/cars/page";
 import PageVideo from "./section/video/page";
 import PageDiscover from "./section/discover/page";
 import PageConclusion from "./section/conclusion/page";
+import PageFooter from "./section/footer/page";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <PageVideo />
       <PageDiscover/>
       <PageConclusion/>
+      <PageFooter/>
     </div>
   );
 }
